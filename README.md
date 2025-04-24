@@ -7,7 +7,7 @@
 
 <br>
 
- ![输入图片说明](ProIMG/javabloger-weixin.jpg) 
+<img src="https://gitee.com/stonedtx/stonedtaiv/raw/master/ProIMG/javabloger-weixin.jpg" title="Logo"  width="220">
 
 
 <br>欢迎扫码进群与我们技术交流<br><br>
