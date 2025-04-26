@@ -247,7 +247,8 @@
 
 扫描微信二维码，商务合作。
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC-%E4%B8%AA%E4%BA%BA%E5%BE%AE%E4%BF%A1.jpg" title="Logo"  width="220">
+<img src="https://gitee.com/stonedtx/stonedtaiv/raw/master/ProIMG/javabloger-weixin.jpg" title="Logo"  width="220">
+
 
 
 ## 捐赠方式
