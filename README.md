@@ -253,9 +253,9 @@
 
 ## 捐赠方式
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/Wechat.png" title="Logo"  width="200">
+<img src="https://gitee.com/stonedtx/stonedtaiv/raw/master/ProIMG/Wechat-pay.png" title="Logo"  width="200">
 
-<img src="https://gitee.com/stonedtx/yuqing/raw/master/ProIMG/zhifubao-pay.png" title="Logo"  width="200">
+<img src="https://gitee.com/stonedtx/stonedtaiv/raw/master/ProIMG/zhifubao-pay.png" title="Logo"  width="200">
 
 
 
