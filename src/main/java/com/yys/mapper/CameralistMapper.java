@@ -1,13 +1,13 @@
 package com.yys.mapper;
 
-
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yys.entity.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface CameralistMapper {
+public interface CameralistMapper extends BaseMapper<AiCamera> {
 
     /**
      * 根据位置、状态等条件分页查询摄像头列表
@@ -16,9 +16,7 @@ public interface CameralistMapper {
      * @return 摄像头列表
      */
 
-    List<AiCamera> selectCameralist(@Param("gId") String gId,
-                                    @Param("pageNum") int pageNum,
-                                    @Param("pageSize") int pageSize);
+    List<AiCamera> selectCameralist(@Param("gId") String gId);
 
     /**
      * 根据分组名称分页查询摄像头分组列表
@@ -58,12 +56,15 @@ public interface CameralistMapper {
     @Select("SELECT * FROM ai_camera")
     List<AiCamera> selectAicameralist();
 
+    @Select("SELECT * FROM ai_camera where id=#{id}")
+    AiCamera selectedAiCamera(@Param("id")Integer id);
+
     @Select("SELECT COUNT(*) FROM ai_camera WHERE camera_status = 1")
     int selectWorkingCamera();
 
     @Update("UPDATE ai_camera SET camera_status = #{cameraStatus} WHERE camera_id = #{cameraId}")
     int updateCamerStats(@Param("cameraId") String cameraId,
-                          @Param("cameraStatus") Integer cameraStatus);
+                         @Param("cameraStatus") Integer cameraStatus);
 
     /**
      * 插入摄像头数量记录
@@ -178,3 +179,4 @@ public interface CameralistMapper {
     int updateModelname(@Param("id") Integer id,
                         @Param("modelName") String modelName);
 }
+

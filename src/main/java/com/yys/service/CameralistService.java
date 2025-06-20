@@ -1,13 +1,15 @@
 package com.yys.service;
 
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yys.entity.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 
-public interface CameralistService {
-    int insertCamera(AiCamera aiCamera);
+public interface CameralistService extends IService<AiCamera> {
+    AiCamera insterCamera(AiCamera camera);
     int selectGroupExists(String groupName);
     int selectCameraExists(String cameraLocation);
     int selectCameraGroupExists(String cameraLocation,String cameraGroup);
@@ -22,7 +24,7 @@ public interface CameralistService {
     Result deleteCameraGroup(String groupId);
     Result deleteCameraList(String cameraId);
     Result selectCameralistGroup(String groupName,int pageNum,int pageSize);
-    Result selectCameralist(String gId,int pageNum,int pageSize);
+    Result selectCameralist(String gId);
     Result updateGroup(String groupId,String groupName);
     Result selectGroupMsg(String groupId);
     Result selectCameraMsg(String cameraId);
@@ -35,7 +37,9 @@ public interface CameralistService {
 
 
     List<AiCamera> selectAicameralist();
+    AiCamera selectedAiCamera(Integer id);
 
 
 
 }
+

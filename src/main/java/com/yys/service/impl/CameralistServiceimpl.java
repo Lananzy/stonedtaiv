@@ -1,6 +1,7 @@
 package com.yys.service.impl;
 
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yys.entity.*;
 import com.yys.mapper.CameralistMapper;
 import com.yys.service.CameralistService;
@@ -14,7 +15,7 @@ import java.util.List;
 
 
 @Service
-public class CameralistServiceimpl implements CameralistService {
+public class CameralistServiceimpl  extends ServiceImpl<CameralistMapper, AiCamera> implements CameralistService {
 
 
     // 自动注入摄像头映射器，用于执行数据库操作
@@ -41,8 +42,8 @@ public class CameralistServiceimpl implements CameralistService {
 
     // 根据摄像头位置、状态等条件分页查询摄像头列表
     @Override
-    public Result selectCameralist(String gId,int pageNum,int pageSize) {
-        List<AiCamera> aiCameraList = cameralistMapper.selectCameralist(gId, pageNum, pageSize);
+    public Result selectCameralist(String gId) {
+        List<AiCamera> aiCameraList = cameralistMapper.selectCameralist(gId);
         int count = cameralistMapper.selectCameralistCount(gId);
         if (aiCameraList != null) {
             return Result.success("获取摄像头列表成功", count, aiCameraList);
@@ -115,6 +116,11 @@ public class CameralistServiceimpl implements CameralistService {
         return cameralistMapper.selectAicameralist();
     }
 
+    @Override
+    public AiCamera selectedAiCamera(Integer id) {
+        return cameralistMapper.selectedAiCamera(id);
+    }
+
     // 插入一个新的摄像头分组，并返回影响的行数
     @Override
     public int insertCameralistCount(CameraSector cameraSector) {
@@ -155,18 +161,20 @@ public class CameralistServiceimpl implements CameralistService {
         return cameralistMapper.selectGroupid();
     }
 
+    @Override
+    public AiCamera insterCamera(AiCamera camera) {
+        int count=cameralistMapper.insert(camera);
+        if (count>0){
+            return camera;
+        }
+        return null;
+    }
+
     // 检查分组名称是否已存在，返回存在的数量
     @Override
     public int selectGroupExists(String groupName) {
         int i = cameralistMapper.selectGroupExists(groupName);
         return i;
-    }
-
-    // 插入一个新的摄像头，返回影响的行数
-    @Override
-    public int insertCamera(AiCamera aiCamera) {
-        int i = cameralistMapper.insertCamera(aiCamera);
-        return 0;
     }
 
     // 查询可分配的摄像头ID
@@ -190,6 +198,7 @@ public class CameralistServiceimpl implements CameralistService {
         }
         return Result.success("获取摄像头信息成功",1,aiCamera);
     }
+
 
     @Override
     public Result updateCamera(AiCamera aiCamera) {
@@ -229,3 +238,4 @@ public class CameralistServiceimpl implements CameralistService {
         return formattedDateTime;
     }
 }
+
