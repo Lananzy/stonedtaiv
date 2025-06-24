@@ -7,6 +7,12 @@
 
 <br>
 
+### 【B站点视频】 :sound: AI视频卫士产品操作说明介绍
+
+[https://www.bilibili.com/video/BV1MFK3zyEFM](https://www.bilibili.com/video/BV1MFK3zyEFM)
+
+<br>
+
 <img src="https://gitee.com/stonedtx/stonedtaiv/raw/master/ProIMG/javabloger-weixin.jpg" title="Logo"  width="220">
 
 
