@@ -18,6 +18,12 @@
 
 <br>欢迎扫码进群与我们技术交流<br><br>
 
+
+
+### 【模型清单】思通数科 AI视频卫士 **商业版** 算法及场景对照表
+[https://docs.qq.com/sheet/DQW1yREprRGNTYXhH](https://docs.qq.com/sheet/DQW1yREprRGNTYXhH)
+
+
 <img src="https://gitee.com/stonedtx/stonedtaiv/raw/master/ProIMG/weixinGroup.jpg" title="Logo"  width="220">
 
 
