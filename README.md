@@ -23,6 +23,8 @@
 ### 【模型清单】思通数科 AI视频卫士 **商业版** 算法及场景对照表
 [https://docs.qq.com/sheet/DQW1yREprRGNTYXhH](https://docs.qq.com/sheet/DQW1yREprRGNTYXhH)
 
+![输入图片说明](ProIMG/model-list.png)
+
 
 <img src="https://gitee.com/stonedtx/stonedtaiv/raw/master/ProIMG/weixinGroup.jpg" title="Logo"  width="220">
 
