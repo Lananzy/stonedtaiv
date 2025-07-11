@@ -1,6 +1,6 @@
 package com.yys.mapper;
 
-import com.yys.entity.AiModels;
+import com.yys.entity.AiModel;
 import com.yys.entity.DetectionTask;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,7 +18,7 @@ public interface CreatedetectiontaskMapper {
      *
      * @return AI模型列表
      */
-    List<AiModels> selectAimodels();
+    List<AiModel> selectAimodels();
 
     /**
      * 插入新的检测任务
@@ -34,7 +34,7 @@ public interface CreatedetectiontaskMapper {
      * @param ids 模型ID，用于定位特定的AI模型
      * @return 匹配的AI模型列表
      */
-    List<AiModels> selectModel(@Param("ids") String ids);
+    List<AiModel> selectModel(@Param("ids") String ids);
 
     /**
      * 根据摄像头位置查询视频流地址
@@ -82,7 +82,7 @@ public interface CreatedetectiontaskMapper {
      * @param Id 任务ID，用于定位特定的检测任务
      * @return 包含任务位置和模型ID的检测任务对象
      */
-    @Select("SELECT camera_position,ids FROM detection_task WHERE id = #{Id}")
+    @Select("SELECT camera_position,camera_id,ids,frame_select,frame_boxs, target_number,frame_interval,set_time FROM detection_task WHERE id = #{Id}")
     DetectionTask selectlocationids(@Param("Id") String Id);
 
     /**
@@ -102,7 +102,7 @@ public interface CreatedetectiontaskMapper {
     int toupdateDetectiontask(DetectionTask detectionTask);
 
 
-    AiModels selectModelById(@Param("id") Integer id);
+    AiModel selectModelById(@Param("id") Integer id);
 
 
     int deleteModelById(@Param("id") Integer id);

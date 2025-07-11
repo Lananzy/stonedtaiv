@@ -4,6 +4,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQconfig {
 
     // 声明一个公共静态常量QUEUE_NAME，用于存储队列名称"json_queue"
-    public static final String QUEUE_NAME = "json_queue";
+    public static final String QUEUE_NAME = "json_queuevideo";
 
     // 声明一个公共静态常量EXCHANGE_NAME，用于存储交换机名称"training_exchange"
     public static final String EXCHANGE_NAME = "training_exchange";

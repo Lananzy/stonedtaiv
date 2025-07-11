@@ -2,10 +2,7 @@ package com.yys.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.yys.entity.*;
-import com.yys.service.CameralistService;
-import com.yys.service.CreatedetectiontaskService;
-import com.yys.service.ModelPlanService;
-import com.yys.service.StreamService;
+import com.yys.service.*;
 import com.yys.util.textimgUtil;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
@@ -28,7 +25,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 @RestController
-@RequestMapping("/plan")
+@RequestMapping(value = "/plan",produces = "application/json;charset=UTF-8")
 @CrossOrigin
 public class ModelPlanController {
 
@@ -55,6 +52,9 @@ public class ModelPlanController {
 
     @Autowired
     private CreatedetectiontaskService createdetectiontaskService;
+
+    @Autowired
+    private AiModelService aiModelService;
 
     @GetMapping("/getPlans")
     public String getPlans(@RequestParam(value = "scene", required = false) String scene) {
@@ -122,9 +122,9 @@ public class ModelPlanController {
 
         Integer id = Integer.valueOf(modelPlan.getModelId());
 
-        AiModels aiModels = createdetectiontaskService.selectModelById(id);
+        AiModel aiModels = aiModelService.getById(id);
 
-        String modelPath =  aiModels.getModelLocation()+"/"+aiModels.getModel();
+        String label =  aiModels.getModel();
         // 创建目标文件夹
         File folder = new File(upload_img);
         if (!folder.exists()) {
@@ -142,7 +142,7 @@ public class ModelPlanController {
 
         File img = new File(String.valueOf(targetPath));
 
-        List<String> list=streamService.getimgmsg(modelPath,img);
+        List<String> list=streamService.getimgmsg(label,img);
 
         if (list.isEmpty()){
             return JSON.toJSONString(Result.success(200, "未检测到目标，请重新上传！",1, "解析失败，未检测到目标，请重新上传！"));
@@ -162,9 +162,8 @@ public class ModelPlanController {
 
         Integer id = Integer.valueOf(modelPlan.getModelId());
 
-        AiModels aiModels = createdetectiontaskService.selectModelById(id);
+        AiModel aiModel = createdetectiontaskService.selectModelById(id);
 
-        String modelPath =  aiModels.getModelLocation()+"/"+aiModels.getModel();
 
         //删除模型管理记录
         if (modelPlanService.deleteModelPlan(Id)==0){
@@ -176,11 +175,6 @@ public class ModelPlanController {
             return JSON.toJSONString(Result.success(500, "删除模型管理记录失败！",1, "删除失败"));
         }
 
-        //删除python端文件
-
-        if (!streamService.deleteModel(modelPath)){
-            return JSON.toJSONString(Result.success(500, "删除模型失败！",1, "删除失败"));
-        }
 
 
         return JSON.toJSONString(Result.success(200, "卸载成功",1, "卸载成功"));
@@ -292,21 +286,22 @@ public class ModelPlanController {
             }
 
             // 记录在数据库
-            AiModels aiModels = new AiModels();
-            aiModels.setModel(fileName);
-            aiModels.setModelLocation(getUploadDir(upload_dir));
-            aiModels.setModelVersion("v1.0.0");
-            aiModels.setModelSource(1);
-            aiModels.setModelName(fileName);
+            AiModel aiModel = new AiModel();
+            aiModel.setModel(fileName);
+            aiModel.setModelVersion("v1.0.0");
+            aiModel.setModelSource(1);
+            aiModel.setModelName(fileName);
             String time = getnowtime();
-            aiModels.setCreateTime(time);
-            aiModels.setUpdateTime(time);
 
-            cameraService.insterModel(aiModels);
+
+            aiModel.setCreateTime(time);
+            aiModel.setUpdateTime(time);
+
+            cameraService.insterModel(aiModel);
 
             // 删除本地文件
             Files.deleteIfExists(targetPath);
-            return aiModels.getId();
+            return aiModel.getId();
         } catch (IOException e) {
             System.err.println("处理模型文件时出错: " + e.getMessage());
             e.printStackTrace();
@@ -369,5 +364,7 @@ public class ModelPlanController {
         String[] parts = path.split("/");
         return parts[2];
     }
+
+
 
 }

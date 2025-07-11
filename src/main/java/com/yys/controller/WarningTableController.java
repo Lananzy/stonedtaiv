@@ -5,7 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.yys.entity.GetWarningSearch;
 import com.yys.entity.GetWarningSearchimg;
 import com.yys.entity.Result;
-import com.yys.entity.WarningTable;
+import com.yys.entity.estable.WarningTable;
 import com.yys.service.RadisService;
 import com.yys.service.WarningTableService;
 import com.yys.util.ImageClassificationUtil;
@@ -35,11 +35,11 @@ public class WarningTableController {
     @GetMapping("/getwarning")
     public String searchWithSort() {
         List<WarningTable> list= warningTableService.searchWithSort();
-        Result result = Result.success(list);
-        if (list.size() > 0) {
-            return JSON.toJSONString(Result.success("获取成功", list.size(), list));
+        if (list==null) {
+            return JSON.toJSONString(Result.success("获取失败", 0, null));
         }
-        return JSON.toJSONString(Result.success("获取失败", 0, list));
+        return JSON.toJSONString(Result.success("获取成功", list.size(), list));
+
     }
 
     @GetMapping("/selectbytaskid")
@@ -121,7 +121,29 @@ public class WarningTableController {
     }
 
 
+    @GetMapping("/getWarningTableByTime")
+    public String getWarningTableByTime(@RequestParam(value = "startTime") String startTime,
+                                        @RequestParam(value = "endTime") String endTime){
 
+        List<WarningTable> warningTables = warningTableService.searchByTime(startTime, endTime);
+        return JSON.toJSONString(Result.success("获取成功", warningTables.size(), warningTables));
+    }
+
+    @GetMapping("/getalertTypes")
+    public String getalertTypes(){
+
+        Map<String, Integer> alertTypes =warningTableService.getalertTypes();
+
+        return JSON.toJSONString(Result.success("获取成功",1,alertTypes));
+    }
+
+    @GetMapping("/getcameraPosition")
+    public String getcameraPosition(){
+
+        Map<String, Integer> cameraPosition =warningTableService.getcameraPosition();
+
+        return JSON.toJSONString(Result.success("获取成功",1,cameraPosition));
+    }
 
 }
 

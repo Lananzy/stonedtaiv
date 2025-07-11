@@ -15,3 +15,4 @@ public class GroupCamerasDTO {
     String updateTime;;
     private List<CameraDTO> cameras;
 }
+

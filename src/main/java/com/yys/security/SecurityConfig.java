@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 // 注册自定义的AccessDeniedHandler和AuthenticationEntryPoint
-                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
+                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
                 .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

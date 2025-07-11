@@ -11,12 +11,18 @@
         (task_id,
         task_name,
         camera_position,
+        camera_id,
         alert_level,
         notification_email,
         create_time,
         ids,
         alert_method,
-        status
+        status,
+        frame_select,
+        frame_boxs,
+        target_number,
+        frame_interval,
+        set_time
         <if test="taskDescription != null and taskDescription != ''">
             , task_description
         </if>
@@ -31,12 +37,18 @@
         #{taskId},
         #{taskName},
         #{cameraPosition},
+        #{cameraId},
         #{alertLevel},
         #{notificationEmail},
         #{createTime},
         #{ids},
         "邮箱",
-        #{status}
+        #{status},
+        #{frameSelect},
+        #{frameBoxs},
+        #{targetNumber},
+        #{frameInterval},
+        #{setTime}
         <if test="taskDescription != null and taskDescription != ''">
             , #{taskDescription}
         </if>
@@ -53,7 +65,9 @@
             detection_task
         SET
             task_tagging = #{taskTagging},
-            status = #{status}
+            status = #{status},
+            frame_select = #{frameSelect},
+            frame_boxs = #{frameBoxs}
         <if test="startTime != null and startTime != ''">
             , start_time = #{startTime}
         </if>
@@ -67,7 +81,7 @@
         DELETE FROM ai_model WHERE id = #{id}
     </delete>
 
-    <select id="selectModel" resultType="com.yys.entity.AiModels">
+    <select id="selectModel" resultType="com.yys.entity.AiModel">
         SELECT
             id,
             model_location,
@@ -79,14 +93,14 @@
             id in (#{ids})
     </select>
 
-    <select id="selectAimodels" resultType="com.yys.entity.AiModels">
+    <select id="selectAimodels" resultType="com.yys.entity.AiModel">
         SELECT
             id,
             model_name
         FROM
             ai_model
     </select>
-    <select id="selectModelById" resultType="com.yys.entity.AiModels">
+    <select id="selectModelById" resultType="com.yys.entity.AiModel">
         SELECT
             *
         FROM
@@ -104,6 +118,7 @@
         ids = #{ids},
         alert_method = "",
         task_name = #{taskName},
+        frame_boxs = #{frameBoxs},
         <if test="taskDescription != null and taskDescription != ''">
             task_description = #{taskDescription},
         </if>

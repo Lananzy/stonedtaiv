@@ -1,6 +1,6 @@
 package com.yys.service.impl;
 
-import com.yys.entity.AiModels;
+import com.yys.entity.AiModel;
 import com.yys.entity.DetectionTask;
 import com.yys.mapper.CreatedetectiontaskMapper;
 import com.yys.service.CreatedetectiontaskService;
@@ -16,7 +16,7 @@ public class CreatedetectiontaskServiceimpl implements CreatedetectiontaskServic
     @Autowired
     private CreatedetectiontaskMapper createdetectiontaskMapper;
     @Override
-    public List<AiModels> selectAimodels() {
+    public List<AiModel> selectAimodels() {
         return createdetectiontaskMapper.selectAimodels();
     }
 
@@ -31,7 +31,7 @@ public class CreatedetectiontaskServiceimpl implements CreatedetectiontaskServic
     }
 
     @Override
-    public List<AiModels> selectModel(String ids) {
+    public List<AiModel> selectModel(String ids) {
         return createdetectiontaskMapper.selectModel(ids);
     }
 
@@ -76,7 +76,7 @@ public class CreatedetectiontaskServiceimpl implements CreatedetectiontaskServic
     }
 
     @Override
-    public AiModels selectModelById(Integer id) {
+    public AiModel selectModelById(Integer id) {
         return createdetectiontaskMapper.selectModelById(id);
     }
 

@@ -1,6 +1,6 @@
 package com.yys.service;
 
-import com.yys.entity.AiModels;
+import com.yys.entity.AiModel;
 import com.yys.entity.DetectionTask;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface CreatedetectiontaskService {
 
-    List<AiModels> selectAimodels();
+    List<AiModel> selectAimodels();
     int insertDetectiontask(DetectionTask detectionTask);
     String selectvideostream(String cameraLocation);
 
-    List<AiModels> selectModel(String ids);
+    List<AiModel> selectModel(String ids);
     String selectdtid();
 
     String selecttaskTagging( String Id);
@@ -29,7 +29,7 @@ public interface CreatedetectiontaskService {
 
     int toupdateDetectiontask(DetectionTask detectionTask);
 
-    AiModels selectModelById(Integer id);
+    AiModel selectModelById(Integer id);
 
     int deleteModelPlan(@Param("id") Integer id);
 

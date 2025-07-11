@@ -15,12 +15,15 @@ public class WebSocketConfig implements WebSocketConfigurer {
     private WebSocketHandler webSocketHandler;
 
     @Autowired
-    private WebSocketDataHandler webSocketDateHandler;
+    private WebSocketMsgHandler webSocketDateHandler;
+
+    @Autowired WebSocketStreamHandler webSocketStreamHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(webSocketHandler, "/ws/video").setAllowedOrigins("*");
-        registry.addHandler(webSocketDateHandler, "/ws/date").setAllowedOrigins("*");
+        registry.addHandler(webSocketDateHandler, "/ws/msg").setAllowedOrigins("*");
+        registry.addHandler(webSocketStreamHandler, "/ws/stream").setAllowedOrigins("*");
     }
 
 }

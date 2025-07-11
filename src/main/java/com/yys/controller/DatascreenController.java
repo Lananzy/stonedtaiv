@@ -4,7 +4,6 @@ import com.alibaba.fastjson2.JSON;
 
 import com.yys.entity.Result;
 import com.yys.service.DatascreenService;
-import com.yys.service.RTSPService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +17,6 @@ public class DatascreenController {
 
     @Resource
     private DatascreenService datascreenService;
-
-    @Resource
-    private RTSPService rtspservice;
 
     /**
      * 查询摄像头列表分组

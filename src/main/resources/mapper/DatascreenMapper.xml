@@ -15,6 +15,10 @@
             <result property="cameraLocation" column="camera_location"/>
             <result property="cameraStatus" column="camera_status"/>
             <result property="videoStreaming" column="video_streaming"/>
+            <result property="videoScale" column="video_scale"/>
+            <result property="videoRate" column="video_rate"/>
+            <result property="zlmId" column="zlm_id"/>
+            <result property="zlmUrl" column="zlm_url"/>
         </collection>
     </resultMap>
 
@@ -27,7 +31,11 @@
             ac.camera_id,
             ac.camera_location,
             ac.camera_status,
-            ac.video_streaming
+            ac.video_streaming,
+            ac.video_scale,
+            ac.video_rate,
+            ac.zlm_id,
+            ac.zlm_url
         FROM
             camera_sector cs
         LEFT JOIN

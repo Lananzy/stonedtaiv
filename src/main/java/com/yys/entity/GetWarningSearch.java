@@ -8,11 +8,14 @@ import java.util.List;
 
 @Data
 public class GetWarningSearch {
-    String searchText;
+
+    List<String> alertTypes;
+
     String startTime;
     String endTime;
+    String searchText;
+    String faceData;
     Integer pageNum;
     Integer pageSize;
-    List<String> alertTypes;
     List<String> cameraPosition;
 }

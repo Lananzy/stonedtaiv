@@ -1,7 +1,6 @@
 package com.yys.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
-
 import com.yys.config.MediaConfig;
 import com.yys.entity.AiZlm;
 import com.yys.service.ZlmediakitService;
@@ -33,7 +32,6 @@ public class ZlmediakitServiceImpl implements ZlmediakitService {
 
     @Value("${datapath.downloadpath}")
     private String downloadpath;
-
 
     @Override
     public String getVideo(AiZlm aiZlm) {

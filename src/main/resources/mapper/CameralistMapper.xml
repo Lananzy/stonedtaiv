@@ -4,16 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yys.mapper.CameralistMapper">
 
-
-
     <update id="updateCamera">
         UPDATE ai_camera
         SET
             camera_location = #{cameraLocation},
             camera_group = #{cameraGroup},
-            <if test="cameraResolution != null and cameraResolution != ''">
-                camera_resolution = #{cameraResolution},
-            </if>
             <if test="cameraStatus != null and cameraStatus != ''">
                 camera_status = #{cameraStatus},
             </if>
@@ -35,16 +30,18 @@
 
     <select id="selectCameralist" resultType="com.yys.entity.AiCamera">
         SELECT
-            camera_id ,
-            camera_location ,
+            ac.id,
+            ac.camera_id ,
+            ac.camera_location ,
             cs.group_name ,
-            camera_resolution ,
-            camera_protocol ,
-            camera_status ,
-            working_time ,
-            camera_img,
-            video_streaming,
-            last_time
+            ac.camera_protocol ,
+            ac.camera_status ,
+            ac.working_time ,
+            ac.camera_img,
+            ac.video_streaming,
+            ac.last_time,
+            ac.zlm_id,
+            ac.zlm_url
         FROM
             ai_camera ac
         LEFT JOIN
@@ -57,7 +54,6 @@
         ORDER BY
             ac.id
         DESC
-        LIMIT #{pageNum}, #{pageSize}
     </select>
 
     <select id="selectCameralistGroup" resultType="com.yys.entity.CameraGroups">
@@ -96,7 +92,6 @@
             ac.camera_location ,
             cs.group_name ,
             ac.camera_port,
-            ac.camera_resolution ,
             ac.camera_protocol ,
             ac.camera_status ,
             ac.working_time ,
@@ -104,7 +99,8 @@
             ac.type_input,
             ac.video_streaming,
             ac.working_time,
-            ac.last_time
+            ac.last_time,
+            ac.video_rate
         FROM
             ai_camera ac
         LEFT JOIN
@@ -140,7 +136,6 @@
             cs.update_time,
             ac.camera_id,
             ac.camera_location,
-            ac.camera_resolution,
             ac.camera_protocol,
             ac.camera_status,
             ac.working_time,
@@ -185,19 +180,39 @@
 
     <insert id="insertCamera">
         INSERT INTO ai_camera
-        (camera_id, camera_location, camera_group, camera_resolution, camera_status, camera_protocol, working_time, last_time,   video_streaming
+        (camera_id,
+         camera_location,
+         camera_group,
+         camera_status,
+         camera_protocol,
+         camera_width,
+         camera_height,
+         video_scale,
+         video_rate,
+         working_time,
+         video_streaming
         <if test="cameraImg != null">
             , camera_img
         </if>
         )
         VALUES (
-        #{cameraId}, #{cameraLocation}, #{cameraGroup}, #{cameraResolution}, #{cameraStatus}, #{cameraProtocol}, #{workingTime}, #{workingTime}, #{videoStreaming}
+                #{cameraId},
+                #{cameraLocation},
+                #{cameraGroup},
+                #{cameraStatus},
+                #{cameraProtocol},
+                #{cameraWidth},
+                #{cameraHeight},
+                #{videoScale},
+                #{videoRate},
+                #{workingTime},
+                #{videoStreaming}
         <if test="cameraImg != null">
             , #{cameraImg}
         </if>
         )
     </insert>
-    <insert id="insterModel" parameterType="com.yys.entity.AiModels" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insterModel" parameterType="com.yys.entity.AiModel" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO ai_model
         (model, model_location,  model_source, model_version, create_time, update_time)
         VALUES (#{model}, #{modelLocation}, 1,#{modelVersion}, #{createTime}, #{updateTime})
