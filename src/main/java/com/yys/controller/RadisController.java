@@ -34,7 +34,6 @@ public class RadisController {
     }
 
 
-
     public Result getDataMsg() {
         // 获取今日计数
         int today=Math.toIntExact(radisCounterService.getTodayCount());

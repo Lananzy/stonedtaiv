@@ -35,7 +35,7 @@ public class UserController {
         }
         String token = JwtUtil.generateToken(user);
         user.setToken(token);
-        redisTemplate.opsForValue().set(token, user.getUserName(), 10, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set(token, user.getUserName(), 7, TimeUnit.DAYS);
         return JSON.toJSONString(Result.success("登陆成功",1,user));
     }
 
@@ -54,6 +54,23 @@ public class UserController {
         } else {
             return JSON.toJSONString(Result.error("无效的Token"));
         }
+    }
+
+    @GetMapping("/getsessionId")
+    public String getsessionId(@RequestHeader("Authorization") String token) {
+        if (token == null || token.isEmpty()) {
+            return JSON.toJSONString(Result.error("Token不能为空"));
+        }
+
+        String jwt = token.substring(7);
+
+        String sessionId= redisTemplate.opsForValue().get(jwt);
+
+        if (sessionId==null){
+            return JSON.toJSONString(Result.success(500,"未获取到sessionId",0,"未获取到sessionId"));
+        }
+
+        return JSON.toJSONString(Result.success("获取成功",1,sessionId));
     }
 
 

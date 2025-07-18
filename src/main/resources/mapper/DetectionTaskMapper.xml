@@ -26,7 +26,7 @@
         <result property="groupName" column="group_name"/>
         <result property="ids" column="ids"/>
 
-        <collection property="aiModels" ofType="com.yys.entity.AiModels">
+        <collection property="aiModels" ofType="com.yys.entity.AiModel">
             <result property="modelName" column="model_name"/>
         </collection>
     </resultMap>
@@ -103,13 +103,21 @@
         <result property="createTime" column="create_time"/>
         <result property="startTime" column="start_time"/>
         <result property="endTime" column="end_time"/>
+        <result property="frameSelect" column="frame_select"/>
+        <result property="frameInterval" column="frame_interval"/>
+        <result property="frameBoxs" column="frame_boxs"/>
+        <result property="targetNumber" column="target_number"/>
+        <result property="setTime" column="set_time"/>
         <result property="status" column="status"/>
         <result property="taskTagging" column="task_tagging"/>
+        <result property="cameraId" column="camera_id"/>
         <result property="videoStreaming" column="video_streaming"/>
         <result property="groupName" column="group_name"/>
         <result property="ids" column="ids"/>
+        <result property="zlmId" column="zlm_id"/>
+        <result property="zlmUrl" column="zlm_url"/>
 
-        <collection property="aiModels" ofType="com.yys.entity.AiModels">
+        <collection property="aiModels" ofType="com.yys.entity.AiModel">
             <result property="modelName" column="model_name"/>
         </collection>
     </resultMap>
@@ -132,9 +140,18 @@
             dt.start_time,
             cs.group_name,
             dt.end_time,
+            dt.frame_select,
+            dt.frame_boxs,
+            dt.target_number,
+            dt.set_time,
             dt.status ,
             dt.task_tagging,
+            ac.id as camera_id,
             ac.video_streaming,
+            ac.zlm_id,
+            ac.zlm_url,
+            dt.target_number,
+            dt.frame_interval,
             dt.ids
         FROM
             detection_task dt
@@ -149,6 +166,15 @@
             on ac.camera_group = cs.id
         WHERE
             dt.id = #{id}
+    </select>
+
+    <select id="getDetectionTasksByStatus" resultType="com.yys.entity.DetectionTask">
+        SELECT
+            *
+        FROM
+            detection_task
+        WHERE
+            status = 1
     </select>
 
 </mapper>

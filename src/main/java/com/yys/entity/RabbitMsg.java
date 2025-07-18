@@ -9,9 +9,10 @@ public class RabbitMsg {
     private String videoPath;
     private String imgPath;
     private String rtspUrl;
-    private String time;
+    private String timestamp;
     private List<String> model;
     private String taskId;
     private Integer index;
+    private String uniqueId;
 }
 

@@ -30,17 +30,14 @@ public class DetectionTaskController {
         if ("全部".equals(alertLevel)) {
             alertLevel = null;
         }
+
         pageNum=(pageNum-1)*pageSize;
 
         Result result = detectionTaskService.getDetectionTasks(taskName, alertLevel, startTime, endTime, pageNum,pageSize);
         return JSON.toJSONString(result);
     }
 
-    @GetMapping("/taskdetailed")
-    public String getDetailedTask(@RequestParam(value = "taskId", required = false) String taskId) {
-        Result result = detectionTaskService.getDetailedTask(taskId);
-        return JSON.toJSONString(result);
-    }
+
 
     @GetMapping("/deletetask")
     public String deleteDetectionTask(@RequestParam(value = "Id", required = false) String Id) {

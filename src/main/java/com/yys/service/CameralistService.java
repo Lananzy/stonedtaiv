@@ -3,7 +3,6 @@ package com.yys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yys.entity.*;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface CameralistService extends IService<AiCamera> {
     int updateCamerStats(String cameraId, Integer cameraStatus);
     int selectWorkingCamera();
     int updateCameraImg(String cameraId, String cameraImg);
-    int insterModel(AiModels aiModels);
+    int insterModel(AiModel aiModel);
     int updateModelname(Integer id, String modelName);
 
     Result selectGroups();
@@ -42,4 +41,3 @@ public interface CameralistService extends IService<AiCamera> {
 
 
 }
-

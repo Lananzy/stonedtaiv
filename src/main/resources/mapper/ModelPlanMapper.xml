@@ -18,7 +18,7 @@
         <result property="scene" column="scene"/>
 
         <!-- 处理多对多关系 -->
-        <collection property="aiModels" ofType="com.yys.entity.AiModels">
+        <collection property="aiModel" ofType="com.yys.entity.AiModel">
             <result property="modelVersion" column="model_version"/>
             <result property="modelSource" column="model_source"/>
             <result property="updateTime" column="update_time"/>

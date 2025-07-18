@@ -1,10 +1,18 @@
 package com.yys.service;
 
 
+import java.io.IOException;
+
 public interface RadisService {
 
     //radis部分
     void incrementCounter();
+
+    void setWarningTableId(String uuId, String Id);
+
+    String getWarningTableId(String uuId);
+
+    boolean deleteWarningTableId(String uuId);
 
     Long getTodayCount();
 
@@ -12,8 +20,11 @@ public interface RadisService {
 
     Long getDayBeforeYesterdayCount();
 
+    //获取
+    String getAccessTokenKey() throws IOException;
 
-    //mysql部分
+
+
 
     //插入datasums表。计数
     Integer insertDataSuns(String date, String sums);

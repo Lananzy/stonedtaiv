@@ -16,5 +16,5 @@ public class ModelPlan {
     private String testResult;
     private String scene;
     private List<String> modelType;
-    private AiModels aiModels;
+    private AiModel aiModel;
 }

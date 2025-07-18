@@ -1,7 +1,9 @@
 package com.yys.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface RadisCounterMapper {
 
     Integer insertDataSuns(@Param("date") String date,

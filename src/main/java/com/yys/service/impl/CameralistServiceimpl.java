@@ -144,9 +144,9 @@ public class CameralistServiceimpl  extends ServiceImpl<CameralistMapper, AiCame
     }
 
     @Override
-    public int insterModel(AiModels aiModels) {
-        cameralistMapper.insterModel(aiModels);
-        return aiModels.getId();
+    public int insterModel(AiModel aiModel) {
+        cameralistMapper.insterModel(aiModel);
+        return aiModel.getId();
     }
 
     @Override
@@ -238,4 +238,3 @@ public class CameralistServiceimpl  extends ServiceImpl<CameralistMapper, AiCame
         return formattedDateTime;
     }
 }
-

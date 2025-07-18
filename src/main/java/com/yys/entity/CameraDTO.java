@@ -23,4 +23,8 @@ public class CameraDTO {
     private String passWord;
     private String address;
     private String agreement;
+    private Double videoScale; //视频比例
+    private Integer videoRate; //视频帧率
+    private Integer zlmId;
+    private String zlmUrl;
 }

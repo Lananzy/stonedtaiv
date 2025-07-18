@@ -2,14 +2,12 @@ package com.yys.consumer;
 
 import com.alibaba.fastjson2.JSON;
 import com.yys.config.RabbitMQconfig;
-import com.yys.config.WebSocketDataHandler;
 import com.yys.entity.DetectionTask;
 import com.yys.entity.RabbitMsg;
-import com.yys.entity.WarningTable;
+import com.yys.entity.estable.WarningTable;
 import com.yys.service.DetectionTaskService;
 import com.yys.service.RadisService;
 import com.yys.service.WarningTableService;
-import com.yys.util.ImageClassificationUtil;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +21,6 @@ import java.time.Instant;
 public class pythonmsgConsumer {
 
     @Autowired
-    WebSocketDataHandler webSocketDataHandler;
-
-    @Autowired
     private WarningTableService warningTableService;
 
     @Autowired
@@ -33,9 +28,6 @@ public class pythonmsgConsumer {
 
     @Autowired
     private RadisService radisCounterService;
-
-    @Autowired
-    private ImageClassificationUtil minioImageClassificationUtil;
 
     @RabbitHandler
     public void process(byte[] message) throws InterruptedException {
@@ -51,7 +43,6 @@ public class pythonmsgConsumer {
 
             // 获取任务信息
             DetectionTask detectionTask = detectionTaskService.selectDetectionType(rabbitMsg.getTaskId());
-
             // 创建警告表
             WarningTable warningTable = new WarningTable();
             warningTable.setId(getCurrentTimestampUsingInstant());
@@ -59,31 +50,36 @@ public class pythonmsgConsumer {
             warningTable.setMonitoringTask(rabbitMsg.getTaskId());
             warningTable.setAlertType(model);
             warningTable.setAlertLevel(detectionTask.getAlertLevel());
-            warningTable.setCapturedVideo(rabbitMsg.getVideoPath());
-            warningTable.setCapturedImage(rabbitMsg.getImgPath());
-            warningTable.setAlertTime(rabbitMsg.getTime());
+            warningTable.setAlertTime(rabbitMsg.getTimestamp());
 
-            // 调用minioImageClassificationUtil从图片中获取到标签信息
-//            warningTable.setVideoTags(minioImageClassificationUtil.classifyImage(rabbitMsg.getImgPath()));
-            /**
-             *  暂时不需要实时推送数据到前端
-             webSocketDataHandler.sendMessageToAll(JSON.toJSONString(warningTable));
-             **/
+            String uuid = rabbitMsg.getUniqueId();
 
-            //Radis计数器
-            radisCounterService.incrementCounter();
-
-            //保存数据到数据库
-            warningTableService.saveWarningTable(warningTable);
-
-
-
+            if (rabbitMsg.getVideoPath()==null){
+                //保存图片
+                warningTable.setCapturedImage(rabbitMsg.getImgPath());
+                WarningTable savewarningTable= warningTableService.saveWarningTable(warningTable);
+                String Id=savewarningTable.getId();
+                radisCounterService.setWarningTableId(uuid,Id);
+                //Radis计数器
+                radisCounterService.incrementCounter();
+            } else if (rabbitMsg.getImgPath()==null) {
+                String guid = radisCounterService.getWarningTableId(uuid);
+                WarningTable warningTablevideo = warningTableService.getWarningTable(guid);
+                warningTablevideo.setCapturedVideo(rabbitMsg.getVideoPath());
+                warningTableService.saveWarningTable(warningTablevideo);
+            }else {
+                warningTable.setCapturedImage(rabbitMsg.getImgPath());
+                warningTable.setCapturedVideo(rabbitMsg.getVideoPath());
+                warningTableService.saveWarningTable(warningTable);
+                //Radis计数器zui
+                radisCounterService.incrementCounter();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     public String getCurrentTimestampUsingInstant() {
         return String.valueOf(Instant.now().toEpochMilli());
     }
+
 }

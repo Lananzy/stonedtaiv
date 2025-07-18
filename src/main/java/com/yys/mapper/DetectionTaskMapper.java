@@ -1,7 +1,6 @@
 package com.yys.mapper;
 
-
-import com.yys.entity.DetailedTask;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yys.entity.DetectionTask;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,7 +13,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface DetectionTaskMapper {
+public interface DetectionTaskMapper extends BaseMapper<DetectionTask> {
     List<DetectionTask> selectDetectionTasks(@Param("taskName") String taskName,
                                              @Param("alertLevel") String alertLevel,
                                              @Param("startTime") LocalDateTime startTime,
@@ -38,6 +37,11 @@ public interface DetectionTaskMapper {
 
     //检测任务详情
     DetectionTask selectDetectiontask(@Param("id") String id);
+
+    List<DetectionTask> getDetectionTasksByStatus();
+
+
+
 }
 
 

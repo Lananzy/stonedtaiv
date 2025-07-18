@@ -64,7 +64,7 @@ public interface CameralistMapper extends BaseMapper<AiCamera> {
 
     @Update("UPDATE ai_camera SET camera_status = #{cameraStatus} WHERE camera_id = #{cameraId}")
     int updateCamerStats(@Param("cameraId") String cameraId,
-                         @Param("cameraStatus") Integer cameraStatus);
+                          @Param("cameraStatus") Integer cameraStatus);
 
     /**
      * 插入摄像头数量记录
@@ -172,11 +172,10 @@ public interface CameralistMapper extends BaseMapper<AiCamera> {
                         @Param("cameraImg") String cameraImg);
 
 
-    void insterModel(AiModels aiModels);
+    void insterModel(AiModel aiModel);
 
 
     @Update("UPDATE ai_model SET model_name = #{modelName} WHERE id = #{id}")
     int updateModelname(@Param("id") Integer id,
                         @Param("modelName") String modelName);
 }
-
