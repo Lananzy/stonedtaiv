@@ -73,6 +73,22 @@ public class UserController {
         return JSON.toJSONString(Result.success("获取成功",1,sessionId));
     }
 
+    @GetMapping("/getUserInfo")
+    public String getUserInfo(@RequestHeader("Authorization") String token) {
+        if (token == null || token.isEmpty()) {
+            return JSON.toJSONString(Result.error("Token不能为空"));
+        }
+        String jwt = token.substring(7);
+        try {
+            return JSON.toJSONString(Result.success("获取成功",1,jwtUtil.extractUserDetails(jwt)));
+        } catch (ExpiredJwtException e) {
+            return JSON.toJSONString(Result.success(500,"Token已过期，请重新登录",0,"Token已过期，请重新登录"));
+        } catch (Exception e) {
+            return JSON.toJSONString(Result.success(500,"获取用户信息失败：" + e.getMessage(),0,"获取用户信息失败：" + e.getMessage()));
+        }
+
+    }
+
 
     @GetMapping("/changePassword")
     public String changePassword(@RequestHeader("Authorization") String token,
