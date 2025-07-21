@@ -17,7 +17,7 @@ export function logout() {
 
 export function getUserInfo() {
   return instance({
-    url: "/user/queryById",
+    url: "/user/getUserInfo",
     method: "get",
   });
 }

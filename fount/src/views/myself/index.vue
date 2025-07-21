@@ -23,10 +23,10 @@
                         <span class="item-key">角色：</span>
                         <span class="item-value">{{ userInfo.role }}</span>
                     </div>
-                    <div class="item">
+                    <!-- <div class="item">
                         <span class="item-key">注册时间：</span>
                         <span class="item-value">{{ userInfo.createTime }}</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -64,10 +64,10 @@ export default {
         return {
             loading: false,
             userInfo: {
-                username: "admin",
-                password: "Stonedt,123",
-                role: "管理员",
-                createTime: "2024-10-31 09:40:12",
+                username: "",
+                password: "",
+                role: "",
+                // createTime: "2024-10-31 09:40:12",
             },
             dialogVisible: false,
             ruleForm: {
@@ -105,7 +105,10 @@ export default {
             this.loading = true;
             getUserInfo().then(res => {
                 if (res.code == 200) {
-
+                    if (Object.keys(res.data).length > 0) {
+                        this.userInfo.username = res.data.userName;
+                        this.userInfo.role = res.data.permissions == "0" ? "管理员" : "用户";
+                    }
                 }
             }).finally(() => {
                 this.loading = false;

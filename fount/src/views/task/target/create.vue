@@ -151,7 +151,7 @@
 </template>
 
 <script>
-import { getTaskDetail, getAllAlgorithm, getCameraList, createTask, updateTask } from "@/api/task/target";
+import { getTaskDetail, getAllAlgorithm, getCameraList, createTask, updateTask, playTask } from "@/api/task/target";
 import livePlayer from "@/components/livePlayer.vue";
 export default {
     components: { livePlayer },
@@ -472,9 +472,31 @@ export default {
                             if (res.code == 200) {
                                 this.$message({
                                     type: 'success',
-                                    message: '添加成功'
+                                    message: res.msg
                                 });
-                                this.$router.push("/task/target");
+                                this.$confirm('任务已经创建成功, 是否立即启动?', '提示', {
+                                    confirmButtonText: '是',
+                                    cancelButtonText: '否',
+                                    type: 'warning',
+                                    showClose: false,
+                                    closeOnClickModal: false,
+                                    closeOnPressEscape: false,
+                                }).then(() => {
+                                    this.loading = true;
+                                    playTask({ Id: res.data.taskId }).then(data => {
+                                        if (data.code == 200) {
+                                            this.$message({
+                                                type: 'success',
+                                                message: data.msg
+                                            });
+                                            this.$router.push("/task/target");
+                                        }
+                                    }).finally(() => {
+                                        this.loading = false;
+                                    })
+                                }).catch(() => {
+                                    this.$router.push("/task/target");
+                                });
                             }
                         }).finally(() => {
                             this.loading = false;
