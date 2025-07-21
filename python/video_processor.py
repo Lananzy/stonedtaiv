@@ -599,6 +599,7 @@ def cleanup_resources(cap, video_path):
     """
     清理资源，包括释放视频流和删除临时文件。
     """
+
     cap.release()
     cv2.destroyAllWindows()
     if os.path.exists(video_path):
